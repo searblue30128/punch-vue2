@@ -110,6 +110,7 @@ export default {
           員工Email: row.email,
           登錄時間: row.today,
           打卡時段: row.period,
+          ip位置: row.ip,
         });
       });
     },

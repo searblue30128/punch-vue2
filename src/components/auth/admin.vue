@@ -137,4 +137,7 @@ export default {
   border-radius: 1em;
   margin-bottom: 1.5em;
 }
+input {
+  margin-top: 0px;
+}
 </style>

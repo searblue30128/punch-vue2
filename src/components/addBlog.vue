@@ -8,6 +8,8 @@
       8-15 --> 午班 
       16-23 --> 晚班 
     </div>
+    <div>ip: {{this.ipAddress}}
+    </div>
     <form v-if="!submitted">
       <label>Emp email:</label>
       <input type="text" v-model.lazy="user.emp" disabled />
@@ -54,25 +56,32 @@ export default {
         timePeriods: "",
       },
       submitted: false,
+      ipAddress: "ipStr",
     };
+  },
+  created() {
+    this.showYourIP();
   },
   methods: {
     async post() {
       let nowHour = new Date().getHours();
-        let periodStr = "";
-        if(nowHour >= 0 && nowHour < 8) {
-            periodStr = "早"
-        }else if(nowHour >= 8 && nowHour < 16){
-            periodStr = "午"
-        }else{
-          periodStr = "晚"
+      let periodStr = "";
+      console.log("user selected: ", this.user.timePeriods);
+      if(nowHour >= 0 && nowHour < 8) {
+        periodStr = "早"
+      }else if(nowHour >= 8 && nowHour < 16){
+        periodStr = "中"
+      }else{
+        periodStr = "晚"
       }
+      console.log("now: ", periodStr);
       if (this.user.timePeriods == periodStr) {
         let record = {
           name: sessionStorage.getItem("userName"),
           email: this.user.emp,
           period: this.user.timePeriods,
-          today: new Date().toLocaleString("sv-SE"),       
+          today: new Date().toLocaleString("sv-SE"),
+          ip: this.ipAddress,       
         };
         // myDB.count({ record }, function (err, counts) {
         //   console.log("count: ", counts);
@@ -95,7 +104,14 @@ export default {
 
     async showButton() {
       this.submitted = false;
-    }
+    },
+    showYourIP(){
+        fetch('https://api.ipify.org?format=json')
+        .then(x => x.json())
+        .then(({ ip }) => {
+            this.ipAddress = ip;
+        });
+    },
   },
 };
 </script>

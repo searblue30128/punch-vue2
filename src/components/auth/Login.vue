@@ -58,6 +58,7 @@ export default {
                 pwd: '123',
                 today: today,
                 period: "早",
+                ip: "127.0.0.1",
                 }, 
     ];
     // myDB.remove({}, { multi: true });

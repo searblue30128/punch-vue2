@@ -61,6 +61,7 @@ export default {
         password: "",
       },
       isVistor: true,
+      ipAddress: "ipStr",
     };
   },
   methods: {
@@ -88,12 +89,20 @@ export default {
                     pwd: this.user.pwd,
                     today: today,
                     period: periodStr,
+                    ip: this.ipAddress,
                     }, 
         ];
         myDB.insert(doc);
         alert("恭喜註冊成功, 即將跳轉到登入頁面");
         this.$router.push({path: "/login"});
       }
+    },
+    showYourIP(){
+        fetch('https://api.ipify.org?format=json')
+        .then(x => x.json())
+        .then(({ ip }) => {
+            this.ipAddress = ip;
+        });
     },
   },
 };
